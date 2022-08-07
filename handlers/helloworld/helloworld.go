@@ -19,6 +19,7 @@ func NewHelloWorldServer() *helloWorldServer {
 
 func (h *helloWorldServer) HelloWorld(
 	ctx context.Context,
+	req *pb.HelloWorldRequest,
 ) (*pb.HelloWorldResponse, error) {
 
 	reqId, _ := uuid.NewRandom()
