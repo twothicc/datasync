@@ -28,9 +28,5 @@ func Init(ctx context.Context) {
 
 // IsTest - Indicates if environment is test or production
 func IsTest() bool {
-	if EnvConfigs.Env == TEST {
-		return true
-	}
-
-	return false
+	return EnvConfigs.Env == TEST
 }

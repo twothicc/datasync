@@ -18,13 +18,17 @@ func InitAndRunGrpcService(ctx context.Context) {
 	if err != nil {
 		logger.WithContext(ctx).Fatal("failed to listen", zap.Error(err))
 	}
+
 	var opts []grpc.ServerOption
 
 	grpcServer := grpc.NewServer(opts...)
 
 	registerServers(grpcServer)
 
-	grpcServer.Serve(lis)
+	if err := grpcServer.Serve(lis); err != nil {
+		logger.WithContext(ctx).Fatal("failed to init grpc server", zap.Error(err))
+		panic("fail to init grpc server")
+	}
 }
 
 func registerServers(server *grpc.Server) {
