@@ -69,6 +69,8 @@ github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5Cc
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/twothicc/common-go/logger v0.0.0-20220807142949-3e1a3e95d90b h1:40auIRfiFWsBu9SxHSpSNt0d60+zKWVXwNdIt8EYsUE=
 github.com/twothicc/common-go/logger v0.0.0-20220807142949-3e1a3e95d90b/go.mod h1:bYqxQst4TFuh+wvrQBh8jm98El+Qxv1WzGm5donTvRA=
+github.com/twothicc/common-go/logger v0.0.0-20220808121446-d9127c6907f4 h1:3bcG2ulb3JwVywecXTpibYpSR5cIAOc1t4qs1SnEKPc=
+github.com/twothicc/common-go/logger v0.0.0-20220808121446-d9127c6907f4/go.mod h1:bYqxQst4TFuh+wvrQBh8jm98El+Qxv1WzGm5donTvRA=
 github.com/twothicc/protobuf v0.0.0-20220807084701-bd8888fe1ec0 h1:7EVUbfBgTbwdtG/c9CqOIulJtwszzuFhMqF+aukQ9xs=
 github.com/twothicc/protobuf v0.0.0-20220807084701-bd8888fe1ec0/go.mod h1:7DH3YtMcKlTASEUi6vEJ/jzOYeAHaBLMdqNDSqiBouM=
 github.com/yuin/goldmark v1.3.5/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1Zlc8k=

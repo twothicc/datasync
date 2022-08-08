@@ -12,7 +12,12 @@ var ctx = context.Background()
 
 func main() {
 	logger.InitLogger(env.IsTest())
-	logger.WithContext(ctx).Info("grpc server starting")
+
 	env.Init(ctx)
-	grpc.InitAndRunGrpcService(ctx)
+
+	dependencies := initDependencies()
+	server := grpc.InitGrpcService(ctx, dependencies.ServerConfigs)
+
+	go server.ListenSignals(ctx)
+	server.Run(ctx)
 }

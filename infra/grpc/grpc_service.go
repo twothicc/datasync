@@ -4,33 +4,62 @@ import (
 	"context"
 	"fmt"
 	"net"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/twothicc/common-go/logger"
-	"github.com/twothicc/datasync/handlers/helloworld"
-	"github.com/twothicc/datasync/tools/env"
-	pb "github.com/twothicc/protobuf/datasync/v1"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 )
 
-func InitAndRunGrpcService(ctx context.Context) {
-	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%s", env.EnvConfigs.Port))
-	if err != nil {
-		logger.WithContext(ctx).Fatal("failed to listen", zap.Error(err))
-	}
+type grpcService struct {
+	configs *ServerConfigs
+	server  *grpc.Server
+}
 
+func InitGrpcService(ctx context.Context, config *ServerConfigs) *grpcService {
 	var opts []grpc.ServerOption
 
 	grpcServer := grpc.NewServer(opts...)
 
-	registerServers(grpcServer)
+	for _, registerServerHandler := range config.registerServerHandlers {
+		registerServerHandler(grpcServer)
+	}
 
-	if err := grpcServer.Serve(lis); err != nil {
-		logger.WithContext(ctx).Fatal("failed to init grpc server", zap.Error(err))
-		panic("fail to init grpc server")
+	return &grpcService{
+		server:  grpcServer,
+		configs: config,
 	}
 }
 
-func registerServers(server *grpc.Server) {
-	pb.RegisterHelloWorldServiceServer(server, helloworld.NewHelloWorldServer())
+func (g *grpcService) Run(ctx context.Context) {
+	logger.WithContext(ctx).Info("start server")
+
+	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%s", g.configs.port))
+	if err != nil {
+		logger.WithContext(ctx).Fatal("failed to listen", zap.Error(err))
+	}
+
+	if err := g.server.Serve(lis); err != nil {
+		logger.WithContext(ctx).Fatal("failed to init grpc server", zap.Error(err))
+	}
+}
+
+func (g *grpcService) ListenSignals(ctx context.Context) {
+	signalChan := make(chan os.Signal, 1)
+
+	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+
+	sig := <-signalChan
+
+	logger.WithContext(ctx).Info("receive signal, stop server", zap.String("signal", sig.String()))
+	time.Sleep(1 * time.Second)
+
+	if g.server != nil {
+		g.server.GracefulStop()
+	}
+
+	logger.Sync()
 }
