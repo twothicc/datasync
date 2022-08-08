@@ -10,5 +10,5 @@ lint:
 compile:
 	cd app; go build -o ../build/datasync
 
-install:
-	cd app; go install
+start:
+	./build/datasync
