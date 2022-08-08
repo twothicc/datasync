@@ -19,3 +19,6 @@ go.work
 
 # env variables
 .env
+
+# build files
+build
