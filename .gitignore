@@ -22,3 +22,6 @@ go.work
 
 # build files
 build
+
+# log file
+server.log
