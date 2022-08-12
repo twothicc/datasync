@@ -17,6 +17,7 @@ func initDependencies() *dependencies {
 		pb.RegisterHelloWorldServiceServer(s, helloworld.NewHelloWorldServer())
 	}
 	serverConfigs := grpcserver.GetDefaultServerConfigs(
+		env.EnvConfigs.ServiceName,
 		env.EnvConfigs.Domain,
 		env.EnvConfigs.Port,
 		env.IsTest(),

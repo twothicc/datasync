@@ -2,9 +2,10 @@ package env
 
 // env keys
 const (
-	DOMAIN = "DOMAIN"
-	PORT   = "PORT"
-	ENV    = "ENV"
+	SERVICE_NAME = "SERVICE_NAME"
+	DOMAIN       = "DOMAIN"
+	PORT         = "PORT"
+	ENV          = "ENV"
 )
 
 // development environments
