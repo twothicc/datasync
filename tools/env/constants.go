@@ -2,8 +2,9 @@ package env
 
 // env keys
 const (
-	PORT = "PORT"
-	ENV  = "ENV"
+	DOMAIN = "DOMAIN"
+	PORT   = "PORT"
+	ENV    = "ENV"
 )
 
 // development environments

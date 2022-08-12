@@ -10,8 +10,9 @@ import (
 )
 
 type envConfigs struct {
-	Port string
-	Env  string
+	Domain string
+	Port   string
+	Env    string
 }
 
 var EnvConfigs = &envConfigs{}
@@ -22,6 +23,7 @@ func Init(ctx context.Context) {
 		logger.WithContext(ctx).Error("fail to init env", zap.Error(err))
 	}
 
+	EnvConfigs.Domain = os.Getenv(DOMAIN)
 	EnvConfigs.Port = os.Getenv(PORT)
 	EnvConfigs.Env = os.Getenv(ENV)
 }
