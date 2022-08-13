@@ -1,5 +1,5 @@
 
-all: format lint compile
+all: vendors format lint compile
 
 fieldAlignment:
 	fieldalignment -fix github.com/twothicc/datasync
@@ -9,6 +9,9 @@ format:
 
 lint:
 	golangci-lint run
+
+vendors:
+	go mod vendor
 
 compile:
 	cd app; go build -o ../build/datasync
