@@ -3,16 +3,16 @@ module github.com/twothicc/datasync
 go 1.18
 
 require (
-	github.com/google/uuid v1.3.0
 	github.com/joho/godotenv v1.4.0
-	github.com/twothicc/common-go/grpcserver v0.0.0-20220812095541-5a232dd7ff75
-	github.com/twothicc/common-go/logger v0.0.0-20220811111418-125ecfec8211
+	github.com/twothicc/common-go/grpcserver v0.0.0-20220812134856-3857a9b9a93b
+	github.com/twothicc/common-go/logger v0.0.0-20220812134856-3857a9b9a93b
 	github.com/twothicc/protobuf v0.0.0-20220807084701-bd8888fe1ec0
 	go.uber.org/zap v1.22.0
 	google.golang.org/grpc v1.48.0
 )
 
 require (
+	github.com/HdrHistogram/hdrhistogram-go v1.1.2 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -25,7 +25,6 @@ require (
 	github.com/prometheus/client_model v0.2.0 // indirect
 	github.com/prometheus/common v0.37.0 // indirect
 	github.com/prometheus/procfs v0.8.0 // indirect
-	github.com/soheilhy/cmux v0.1.5 // indirect
 	github.com/uber/jaeger-client-go v2.30.0+incompatible // indirect
 	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
 	go.uber.org/atomic v1.9.0 // indirect
