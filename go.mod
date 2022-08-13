@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/joho/godotenv v1.4.0
-	github.com/twothicc/common-go/grpcserver v0.0.0-20220812134856-3857a9b9a93b
+	github.com/twothicc/common-go/grpcserver v0.0.0-20220813064243-41abd81a2a39
 	github.com/twothicc/common-go/logger v0.0.0-20220812134856-3857a9b9a93b
 	github.com/twothicc/protobuf v0.0.0-20220807084701-bd8888fe1ec0
 	go.uber.org/zap v1.22.0
