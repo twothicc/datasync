@@ -241,6 +241,10 @@ github.com/twothicc/common-go/grpcserver v0.0.0-20220812134434-fb6c0979fe6b h1:m
 github.com/twothicc/common-go/grpcserver v0.0.0-20220812134434-fb6c0979fe6b/go.mod h1:21c/u0D9kkl6vj+eDpJGky7XGBrm3LAxkMg9T5xIIq8=
 github.com/twothicc/common-go/grpcserver v0.0.0-20220812134856-3857a9b9a93b h1:KF6RZXOVBGTCg+Rbhn6NjlBSQXChXXnZmvjYHBcXWC8=
 github.com/twothicc/common-go/grpcserver v0.0.0-20220812134856-3857a9b9a93b/go.mod h1:21c/u0D9kkl6vj+eDpJGky7XGBrm3LAxkMg9T5xIIq8=
+github.com/twothicc/common-go/grpcserver v0.0.0-20220813053826-97bb0d8085b2 h1:3u4jjU/00+csQ3WcJP1in4MvzLseWAxJppG36K2GFgA=
+github.com/twothicc/common-go/grpcserver v0.0.0-20220813053826-97bb0d8085b2/go.mod h1:21c/u0D9kkl6vj+eDpJGky7XGBrm3LAxkMg9T5xIIq8=
+github.com/twothicc/common-go/grpcserver v0.0.0-20220813064243-41abd81a2a39 h1:lHCVdE+pEGmey9G72q9M/8SZPkaTSeABw4Bs4VPmpNA=
+github.com/twothicc/common-go/grpcserver v0.0.0-20220813064243-41abd81a2a39/go.mod h1:21c/u0D9kkl6vj+eDpJGky7XGBrm3LAxkMg9T5xIIq8=
 github.com/twothicc/common-go/logger v0.0.0-20220812112927-44b763df777a h1:tHcsM/BUM57sOGWkaxhEhqDT431lF5K30thI8M7G4zw=
 github.com/twothicc/common-go/logger v0.0.0-20220812112927-44b763df777a/go.mod h1:jYgkm5U/pQuALJ/EpEQk9O8TDUun9gRuHOQnrNRmccw=
 github.com/twothicc/common-go/logger v0.0.0-20220812113856-180a37cdd40b h1:AIqs1ci7xt5Wg2Bxs5JslM4qFrX6QZxdhH5h83/0O7g=
