@@ -15,6 +15,7 @@ func main() {
 	logger.InitLogger(zapcore.ErrorLevel)
 
 	env.Init(ctx)
+
 	if env.IsTest() {
 		logger.InitLogger(zapcore.DebugLevel)
 	}
