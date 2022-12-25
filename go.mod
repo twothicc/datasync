@@ -6,7 +6,7 @@ require (
 	github.com/joho/godotenv v1.4.0
 	github.com/twothicc/common-go/grpcserver v0.0.0-20220813064243-41abd81a2a39
 	github.com/twothicc/common-go/logger v0.0.0-20220815095443-75a5d558c1d5
-	github.com/twothicc/protobuf v0.0.0-20220807084701-bd8888fe1ec0
+	github.com/twothicc/protobuf v0.0.0-20220820154307-eeaba61584fb
 	go.uber.org/zap v1.22.0
 	google.golang.org/grpc v1.48.0
 )
