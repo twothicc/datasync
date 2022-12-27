@@ -1,0 +1,8 @@
+# This is a TOML document
+
+[kafka]
+version = "3.3.0"
+topics = ["sync"]
+consumer_group = "sync_consumers"
+broker_list = ["127.0.0.1:9092", "127.0.0.1:9093", "127.0.0.1:9094"]
+assignor = "range"
