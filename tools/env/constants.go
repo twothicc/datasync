@@ -6,6 +6,8 @@ const (
 	DOMAIN       = "DOMAIN"
 	PORT         = "PORT"
 	ENV          = "ENV"
+	ELASTIC_USER = "ELASTIC_USER"
+	ELASTIC_PASS = "ELASTIC_PASS"
 )
 
 // development environments

@@ -3,13 +3,22 @@ module github.com/twothicc/datasync
 go 1.18
 
 require (
+	github.com/elastic/go-elasticsearch/v8 v8.5.0
 	github.com/joho/godotenv v1.4.0
 	github.com/twothicc/common-go/grpcserver v0.0.0-20220813064243-41abd81a2a39
 	github.com/twothicc/common-go/logger v0.0.0-20220815095443-75a5d558c1d5
 	github.com/twothicc/protobuf v0.0.0-20220820154307-eeaba61584fb
+	github.com/valyala/fasthttp v1.43.0
 	go.uber.org/zap v1.22.0
 	google.golang.org/grpc v1.48.0
 	gopkg.in/Shopify/sarama.v1 v1.20.1
+)
+
+require (
+	github.com/andybalholm/brotli v1.0.4 // indirect
+	github.com/elastic/elastic-transport-go/v8 v8.0.0-20211216131617-bbee439d559c // indirect
+	github.com/klauspost/compress v1.15.9 // indirect
+	github.com/valyala/bytebufferpool v1.0.0 // indirect
 )
 
 require (

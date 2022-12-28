@@ -14,6 +14,8 @@ type envConfigs struct {
 	Domain      string
 	Port        string
 	Env         string
+	ElasticUser string
+	ElasticPass string
 }
 
 var EnvConfigs = &envConfigs{}
@@ -28,6 +30,8 @@ func Init(ctx context.Context) {
 	EnvConfigs.Domain = os.Getenv(DOMAIN)
 	EnvConfigs.Port = os.Getenv(PORT)
 	EnvConfigs.Env = os.Getenv(ENV)
+	EnvConfigs.ElasticUser = os.Getenv(ELASTIC_USER)
+	EnvConfigs.ElasticPass = os.Getenv(ELASTIC_PASS)
 }
 
 // IsTest - Indicates if environment is test or production

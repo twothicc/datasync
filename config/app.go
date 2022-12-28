@@ -15,8 +15,15 @@ type KafkaConfig struct {
 	Topics        []string `toml:"topics"`
 }
 
+type ElasticConfig struct {
+	AddressList           []string `toml:"address_list"`
+	MaxIdleConnsPerHost   uint32   `toml:"max_idle_conns_per_host"`
+	ResponseHeaderTimeout uint32   `toml:"response_header_timeout"`
+}
+
 type Config struct {
-	KafkaConfig KafkaConfig `toml:"kafka"`
+	KafkaConfig   KafkaConfig   `toml:"kafka"`
+	ElasticConfig ElasticConfig `toml:"elastic"`
 }
 
 func NewConfig(path string) (*Config, error) {

@@ -28,3 +28,6 @@ server.log
 
 # vscode
 .vscode/
+
+# kibana yml
+docker-compose/kibana.yml

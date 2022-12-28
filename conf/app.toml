@@ -6,3 +6,8 @@ topics = ["sync"]
 consumer_group = "sync_consumers"
 broker_list = ["127.0.0.1:9092", "127.0.0.1:9093", "127.0.0.1:9094"]
 assignor = "range"
+
+[elastic]
+address_list = ["http://localhost:9200"]
+max_idle_conns_per_host = 10
+response_header_timeout = 1
