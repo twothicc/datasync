@@ -27,5 +27,8 @@ startJaegerUI:
 startPrometheus:
 	docker run -p 9090:9090 --name prometheus -v C:/GoApps/datasync/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
 
+startElasticKibana:
+	cd docker-compose; docker-compose --env-file ../.env up
+
 start:
 	./build/datasync
