@@ -1,4 +1,4 @@
-package elastic
+package elasticsearch
 
 import (
 	"github.com/twothicc/common-go/errortype"

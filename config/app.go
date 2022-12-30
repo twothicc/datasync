@@ -16,9 +16,7 @@ type KafkaConfig struct {
 }
 
 type ElasticConfig struct {
-	AddressList           []string `toml:"address_list"`
-	MaxIdleConnsPerHost   uint32   `toml:"max_idle_conns_per_host"`
-	ResponseHeaderTimeout uint32   `toml:"response_header_timeout"`
+	AddressList []string `toml:"address_list"`
 }
 
 type Config struct {

@@ -9,5 +9,3 @@ assignor = "range"
 
 [elastic]
 address_list = ["http://localhost:9200"]
-max_idle_conns_per_host = 10
-response_header_timeout = 1
