@@ -67,12 +67,25 @@ func (bh *BulkHandler) Run(ctx context.Context, delay time.Duration) {
 					}
 
 					bh.bulkRespCh <- bulkResp
+
+					bh.bulkList = bh.bulkList[:0]
 				}
 
 				bh.bulkService.Add(*req)
 
 				t.Reset(delay)
 			case <-t.C:
+				if len(bh.bulkList) > 0 {
+					bulkResp, err := bh.bulkService.Do(ctx)
+					if err != nil {
+						logger.WithContext(ctx).Error("[BulkHandler.Run]fail to send bulk request", zap.Error(err))
+					}
+
+					bh.bulkRespCh <- bulkResp
+
+					bh.bulkList = bh.bulkList[:0]
+				}
+
 				t.Reset(delay)
 			}
 		}
