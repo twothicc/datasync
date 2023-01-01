@@ -10,3 +10,9 @@ const (
 const (
 	ELASTIC_ID_SEPARATOR = "-"
 )
+
+const (
+	BASE10 = 10
+	BIT32  = 32
+	CTIME  = "ctime"
+)

@@ -46,9 +46,11 @@ func NewMessageHandler(ctx context.Context, esClient *elastic.Client) (IMessageH
 	}
 
 	mh := &MessageHandler{
-		ctx:         ctx,
-		esClient:    esClient,
-		bulkHandler: elasticsearch.InitAndRunBulkHandler(ctx, esClient, BULK_DELAY*time.Second),
+		ctx:             ctx,
+		esClient:        esClient,
+		bulkHandler:     elasticsearch.InitAndRunBulkHandler(ctx, esClient, BULK_DELAY*time.Second),
+		existingIndexes: make(map[string]bool),
+		mu:              &sync.Mutex{},
 	}
 
 	return mh, nil
@@ -203,7 +205,11 @@ func (mh *MessageHandler) createIndexIfNotExist(indexName string) error {
 
 func (mh *MessageHandler) handleInsert(msg *Message, newData map[string]interface{}) error {
 	indexName := shardname.GetShardName(msg.Table, msg.Ctimestamp)
-	uniqueId := getUniqueID(msg.Pk)
+
+	uniqueId, uniqueIdErr := getUniqueId(msg.Pk, newData)
+	if uniqueIdErr != nil {
+		return uniqueIdErr
+	}
 
 	if indexErr := mh.createIndexIfNotExist(indexName); indexErr != nil {
 		return indexErr
@@ -223,13 +229,17 @@ func (mh *MessageHandler) handleInsert(msg *Message, newData map[string]interfac
 }
 
 func (mh *MessageHandler) handleDelete(msg *Message, oldData map[string]interface{}) error {
-	oldCtimestamp, ok := oldData["ctimestamp"].(uint32)
-	if !ok {
-		return ErrInvalidCtimestamp.New("[MessageHandler.handleDelete]fail to type assert old record ctimestamp")
+	oldCtimestamp, ctimestampErr := parseTimestamp(oldData[CTIME])
+	if ctimestampErr != nil {
+		return ctimestampErr
 	}
 
 	indexName := shardname.GetShardName(msg.Table, oldCtimestamp)
-	uniqueId := getUniqueID(msg.Pk)
+
+	uniqueId, uniqueIdErr := getUniqueId(msg.Pk, oldData)
+	if uniqueIdErr != nil {
+		return uniqueIdErr
+	}
 
 	if indexErr := mh.createIndexIfNotExist(indexName); indexErr != nil {
 		return indexErr
@@ -249,19 +259,22 @@ func (mh *MessageHandler) handleDelete(msg *Message, oldData map[string]interfac
 }
 
 func (mh *MessageHandler) handleUpdate(msg *Message, oldData, newData map[string]interface{}) error {
-	oldCtimestamp, ok := oldData["ctimestamp"].(uint32)
-	if !ok {
-		return ErrInvalidCtimestamp.New("[MessageHandler.handleDelete]fail to type assert old record ctimestamp")
+	oldCtimestamp, oldCtimestampErr := parseTimestamp(oldData[CTIME])
+	if oldCtimestampErr != nil {
+		return oldCtimestampErr
 	}
 
-	newCtimestamp, ok := newData["ctimestamp"].(uint32)
-	if !ok {
-		return ErrInvalidCtimestamp.New("[MessageHandler.handleDelete]fail to type assert new record ctimestamp")
+	newCtimestamp, newCtimestampErr := parseTimestamp(newData[CTIME])
+	if newCtimestampErr != nil {
+		return newCtimestampErr
 	}
-
-	uniqueId := getUniqueID(msg.Pk)
 
 	if oldCtimestamp == newCtimestamp {
+		uniqueId, uniqueIdErr := getUniqueId(msg.Pk, newData)
+		if uniqueIdErr != nil {
+			return uniqueIdErr
+		}
+
 		indexName := shardname.GetShardName(msg.Table, oldCtimestamp)
 
 		if indexErr := mh.createIndexIfNotExist(indexName); indexErr != nil {
@@ -278,6 +291,16 @@ func (mh *MessageHandler) handleUpdate(msg *Message, oldData, newData map[string
 			zap.String("pk", uniqueId),
 		)
 	} else {
+		oldUniqueId, oldUniqueIdErr := getUniqueId(msg.Pk, oldData)
+		if oldUniqueIdErr != nil {
+			return oldUniqueIdErr
+		}
+
+		newUniqueId, newUniqueIdErr := getUniqueId(msg.Pk, newData)
+		if newUniqueIdErr != nil {
+			return newUniqueIdErr
+		}
+
 		oldIndexName := shardname.GetShardName(msg.Table, oldCtimestamp)
 		newIndexName := shardname.GetShardName(msg.Table, newCtimestamp)
 
@@ -289,19 +312,20 @@ func (mh *MessageHandler) handleUpdate(msg *Message, oldData, newData map[string
 			return newIndexErr
 		}
 
-		deleteReq := elastic.NewBulkDeleteRequest().Index(oldIndexName).Id(uniqueId)
+		deleteReq := elastic.NewBulkDeleteRequest().Index(oldIndexName).Id(oldUniqueId)
 
 		mh.bulkHandler.AddBulkRequest(mh.ctx, deleteReq)
 
-		indexReq := elastic.NewBulkIndexRequest().Index(newIndexName).Id(uniqueId).Doc(newData)
+		indexReq := elastic.NewBulkIndexRequest().Index(newIndexName).Id(newUniqueId).Doc(newData)
 
 		mh.bulkHandler.AddBulkRequest(mh.ctx, indexReq)
 
 		logger.WithContext(mh.ctx).Info(
 			"[MessageHandler.handleUpdate]successfully added delete and insert req",
 			zap.String("old indexName", oldIndexName),
+			zap.String("old pk", oldUniqueId),
 			zap.String("new indexName", newIndexName),
-			zap.String("pk", uniqueId),
+			zap.String("new pk", newUniqueId),
 		)
 	}
 
