@@ -31,6 +31,7 @@ func newElasticConfig(ctx context.Context, elasticCfg *config.ElasticConfig) []e
 		elastic.SetURL(elasticCfg.AddressList...),
 		elastic.SetBasicAuth(env.EnvConfigs.ElasticUser, env.EnvConfigs.ElasticPass),
 		elastic.SetErrorLog(NewElasticErrorLogger(ctx)),
+		elastic.SetSniff(false),
 	}
 
 	if env.IsTest() {
