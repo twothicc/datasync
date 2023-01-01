@@ -5,16 +5,16 @@ import (
 	"time"
 
 	"github.com/olivere/elastic/v7"
+	"github.com/twothicc/common-go/logger"
 	"github.com/twothicc/datasync/tools/env"
-	"github.com/twothicc/datasync/vendor/github.com/twothicc/common-go/logger"
 	"go.uber.org/zap"
 )
 
 type BulkHandler struct {
 	bulkReqCh   chan *elastic.BulkableRequest
 	bulkRespCh  chan *elastic.BulkResponse
-	bulkList    []*elastic.BulkableRequest
 	bulkService *elastic.BulkService
+	bulkList    []*elastic.BulkableRequest
 	isRunning   bool
 }
 
@@ -23,15 +23,10 @@ type IBulkHandler interface {
 	Run(ctx context.Context, delay time.Duration)
 }
 
-type doc struct {
-	ID        string    `json:"id"`
-	Timestamp time.Time `json:"@timestamp"`
-}
-
 func InitBulkHandler(ctx context.Context, esClient *elastic.Client) IBulkHandler {
 	bulkReqCh := make(chan *elastic.BulkableRequest)
 	bulkRespCh := make(chan *elastic.BulkResponse)
-	bulkList := make([]*elastic.BulkableRequest, 0, 100)
+	bulkList := make([]*elastic.BulkableRequest, 0, MAX_BULK_REQ)
 	bulkService := elastic.NewBulkService(esClient)
 
 	return &BulkHandler{

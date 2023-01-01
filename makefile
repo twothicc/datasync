@@ -2,7 +2,7 @@
 all: vendors format lint compile
 
 fieldAlignment:
-	fieldalignment -fix github.com/twothicc/datasync/config
+	fieldalignment -fix github.com/twothicc/datasync/infra/elasticsearch
 
 format:
 	gofmt -s -w $$(find . -type f -name '*.go'| grep -v "/vendor/")

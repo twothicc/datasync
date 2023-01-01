@@ -23,7 +23,7 @@ type MessageHandler struct {
 	ctx             context.Context
 	esClient        *elastic.Client
 	bulkHandler     elasticsearch.IBulkHandler
-	existingIndexes map[string]bool //assumption that indexes won't be deleted in ES
+	existingIndexes map[string]bool // assumption that indexes won't be deleted in ES
 	mu              *sync.Mutex
 }
 
