@@ -19,7 +19,7 @@ type BulkHandler struct {
 }
 
 type IBulkHandler interface {
-	AddBulkRequest(ctx context.Context, bulkReq *elastic.BulkableRequest)
+	AddBulkRequest(ctx context.Context, bulkReq elastic.BulkableRequest)
 	Run(ctx context.Context, delay time.Duration)
 }
 
@@ -104,6 +104,6 @@ func (bh *BulkHandler) Run(ctx context.Context, delay time.Duration) {
 	bh.isRunning = true
 }
 
-func (bh *BulkHandler) AddBulkRequest(ctx context.Context, bulkReq *elastic.BulkableRequest) {
-	bh.bulkReqCh <- bulkReq
+func (bh *BulkHandler) AddBulkRequest(ctx context.Context, bulkReq elastic.BulkableRequest) {
+	bh.bulkReqCh <- &bulkReq
 }
